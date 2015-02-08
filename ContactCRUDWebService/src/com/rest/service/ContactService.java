@@ -3,6 +3,8 @@ package com.rest.service;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.io.FileWriter;
+import java.util.ArrayList;
 
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
@@ -36,6 +38,48 @@ public class ContactService {
 			e.printStackTrace();
 		}
 		return str;
+	}
+	
+	@GET
+	@Path("/ViewContacts")
+	@Produces(MediaType.APPLICATION_JSON)
+	
+	public String viewContacts(){
+		
+		String contacts = null;
+		
+		try{
+			
+			ArrayList<Contact> contactList = null;
+			
+			ContactManager contactManager = new ContactManager();
+			
+			contactList = contactManager.viewContacts();
+			
+			Gson gson = new Gson();
+			String output = gson.toJson(contactList);
+			
+			System.out.println(output);
+			
+			//Create a file and write JSON output into that file
+			File file=new File("D:\\Project\\git\\ContactCRUDWebService\\ContactCRUDWebService\\ViewContacts.json");
+			
+			if (!file.exists()) {
+				file.createNewFile();
+			}
+			
+			FileWriter fw=new FileWriter(file);
+			fw.write(output);
+			System.out.println("All Contacts are stored in ViewContacts.JSON file");
+			fw.close();
+			
+		}//try
+		
+		catch(Exception e){
+			System.out.println("Error");
+			e.printStackTrace();
+		}
+		return contacts;
 	}
 
 }

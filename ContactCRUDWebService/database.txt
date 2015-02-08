@@ -1,0 +1,18 @@
+MySQL Database details
+
+//Create a database
+
+create database contact_db;
+
+//Use database
+
+use contact_db;
+
+//create a "contact" table
+
+create table contact(
+contact_id int auto_increment primary key,
+fname varchar(100) not null,
+lname varchar(50),mobno varchar(15) not null,
+email varchar(50),addr varchar(100),
+note varchar(200));
